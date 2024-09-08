@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #e0f7fa, #80deea);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #00796b; /* Teal color */
+        }
+        button {
+            margin: 10px;
+            padding: 12px 24px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #004d40; /* Darker teal color */
+        }
+        textarea {
+            margin: 20px;
+            padding: 15px;
+            border: 2px solid #00796b;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text to Speech</h1>
+    <textarea id="text" rows="10" placeholder="Enter text here..."></textarea>
+    <div id="buttons">
+        <button id="speakButton">Speak</button>
+        <button id="stopButton">Stop</button>
+        <button id="downloadButton">Download</button>
+        <button id="homeButton" onclick="window.location.href='index.html'">Home</button>
+    </div>
+
+    <script>
+        document.getElementById("speakButton").addEventListener("click", function() {
+            var text = document.getElementById("text").value;
+            var speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(speechSynthesisUtterance);
+        });
+
+        document.getElementById("stopButton").addEventListener("click", function() {
+            speechSynthesis.cancel();
+        });
+
+        document.getElementById("downloadButton").addEventListener("click", function() {
+            var text = document.getElementById("text").value;
+            var blob = new Blob([text], { type: 'text/plain' });
+            var a = document.createElement('a');
+            a.href = window.URL.createObjectURL(blob);
+            a.download = 'speech.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+    </script>
+</body>
+</html>

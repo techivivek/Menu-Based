@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create S3 Bucket</title>
+</head>
+<body>
+    <h1>Create an S3 Bucket</h1>
+    <form action="/cgi-bin/create_bucket.py" method="post">
+        <label for="bucket_name">Bucket Name:</label><br>
+        <input type="text" id="bucket_name" name="bucket_name" required><br>
+        <label for="region">Region (optional):</label><br>
+        <input type="text" id="region" name="region"><br><br>
+        <input type="submit" value="Create Bucket">
+    </form>
+</body>
+</html>

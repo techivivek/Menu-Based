@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivek's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #020305 0%, #243d45 100%);
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        header nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 120px 20px 80px;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .section h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Container Styles */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Home Section */
+        .home-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: #fff;
+        }
+
+        .home-content h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .home-content p {
+            font-size: 1.2em;
+            margin-top: 20px;
+            max-width: 600px;
+        }
+
+        .home-content img {
+            width: 250px;
+            /* Adjust the size as needed */
+            height: 250px;
+            /* Adjust the size as needed */
+            border-radius: 50%;
+            /* Makes the image circular */
+            margin-bottom: 10px;
+            margin-top: -200px;
+            object-fit: cover;
+            /* Ensures the image covers the circular area */
+        }
+
+
+        /* Projects Section */
+        .projects .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .projects .button-container button {
+            padding: 12px 24px;
+            background: rgba(34, 34, 34, 0.8);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .projects .button-container button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Chatbot Button */
+        .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            background: linear-gradient(135deg, #f9d423 0%, #ff4e50 100%);
+            transform: scale(1.1);
+        }
+
+        .chatbot-button i {
+            font-size: 24px;
+        }
+
+        /* About Me Section */
+        .about-me {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            max-width: 800px;
+            color: #fff;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .about-me img {
+            max-width: 200px;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+
+        /* Skills Section */
+        .skills ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .skills ul li {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            flex: 1 1 calc(25% - 30px);
+            /* Four columns */
+            text-align: center;
+        }
+
+        .skills ul li:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Contact Section */
+        .contact div a {
+            margin: 0 10px;
+            color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .contact div a:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About Me</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="section">
+        <div class="home-content">
+            <img src="./vivek.jpg" alt="Your Photo">
+            <h1>Welcome to My Portfolio</h1>
+            <p>Hi, I'm Vivek, a passionate developer and innovator. Explore my work, projects, and skills below.</p>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="section">
+        <h1>About Me</h1>
+        <div class="container about-me">
+            <div>
+                <p>Hi, I'm Vivek,the Co-Founder TechDate, A unique platform where tech geeks make meaningful connections, solve problems together by posting errors of different technologies and find match through learning.
+                    My work is driven by a passion for technology, with a particular focus on DevOps and cybersecurity.
+                    <br><br>
+                    I bring a diverse set of skills to my projects, including expertise in Linux, Python, machine learning, AWS, Kubernetes, Docker, Jenkins, GitHub, HTML, CSS, JavaScript, Flutter Flow, and Figma. These tools allow me to develop robust and scalable solutions, ensuring both performance and security are top priorities.
+                    If I can help you in any way, feel free to reach out anytime—I'm happy to support and connect.
+                    <br><br>
+                            Email: vivek.sikarwar0910@gmail.com
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h1>Projects</h1>
+        <div class="container projects">
+            <div class="button-container" id="button-container">
+                <!-- Project Buttons -->
+                <!-- Project Buttons -->
+                <button onclick="location.href='Python/domain.html'">Domain</button>
+                <button onclick="location.href='Python/scrape.html'">Website Scraper</button>
+                <button onclick="location.href='Full_Stack/gsearch.html'">Google Search</button>
+                <button onclick="location.href='Full_Stack/newlive.html'">LiveHTML</button>
+                <button onclick="location.href='Linux/jooker.html'">Docker</button>
+                <button onclick="location.href='Linux/lwcmd.html'">Command Executor</button>
+                <button onclick="location.href='AWSfiles/index.html'">AWS Services</button>
+                <button onclick="location.href='Python/geo.html'">Location</button>
+                <button onclick="location.href='HTMLTasks/'">HTML Tasks</button>
+                <button onclick="location.href='Full_Stack/capturephoto.html'">Capture Photo</button>
+                <button onclick="location.href='Full_Stack/speech_text.html'">Voice to Text</button>
+                <button onclick="location.href='Full_Stack/text_speech.html'">Text to Speech</button>
+                <button onclick="location.href='Full_Stack/capture_record.html'">Capture Recording</button>
+                <button onclick="location.href='Python/send1.html'">Send One Email</button>
+                <button onclick="location.href='Python/sendmany.html'">Send Many Emails</button>
+                <button onclick="location.href='Python/whatmessage.html'">Send WhatsApp</button>
+                <button onclick="location.href='chatbot.html'">AI Chat</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <h1>Skills</h1>
+        <div class="container skills">
+            <ul>
+                <li>Python</li>
+                <li>JavaScript</li>
+                <li>HTML & CSS</li>
+                <li>Docker</li>
+                <li>Kubernetes</li>
+                <li>Cloud Computing (AWS, Azure)</li>
+                <li>SQL</li>
+                <li>Git & GitHub</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h1>Contact</h1>
+        <div class="container contact">
+            <div>
+                <a href="https://www.linkedin.com/in/vivek-kumar-71437b204/"><i class="fab fa-linkedin fa-2x"></i></a>
+                <a href="https://github.com/techivivek"><i class="fab fa-github fa-2x"></i></a>
+                <a href="https://medium.com/@techivivek" target="_blank"><i class="fab fa-medium fa-2x"></i></a>
+                <a href="mailto:viveksikarwar1304@gmail.com"><i class="fas fa-envelope fa-2x"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot Button -->
+    <button class="chatbot-button" onclick="location.href='chatbot.html'">
+        <i class="fas fa-robot"></i>
+    </button>
+</body>
+
+</html>

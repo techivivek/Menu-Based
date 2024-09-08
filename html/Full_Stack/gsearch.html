@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Google</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .search-container {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .search-container h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #4a90e2;
+        }
+
+        .search-container form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 12px 15px;
+            font-size: 16px;
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-container input[type="text"]:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.2);
+        }
+
+        .search-container input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4a90e2;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .search-container input[type="submit"]:hover {
+            background-color: #357ab8;
+            transform: translateY(-2px);
+        }
+
+        .search-container input[type="submit"]:active {
+            background-color: #2d6fa0;
+            transform: translateY(0);
+        }
+
+        .search-container .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .search-container .footer a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+
+        .search-container .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h1>Google Search</h1>
+        <form method="get" action="/cgi-bin/yes.py">
+            <input type="text" name="query" placeholder="Search Google..." required>
+            <input type="submit" value="Search">
+        </form>
+        <div class="footer">
+            <p>Powered by <a href="https://www.google.com" target="_blank">Google</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sender</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 500;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 1.5rem;
+        }
+        .result div {
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            font-size: 16px;
+            text-align: center;
+        }
+        .result .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .result .failed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Send Email</h1>
+        <form id="emailForm" method="POST" action="/cgi-bin/bulk.py" enctype="application/x-www-form-urlencoded">
+            <label for="emails">Recipient Email Addresses (comma-separated):</label>
+            <input type="text" id="emails" name="emails" required>
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+            <label for="body">Body:</label>
+            <textarea id="body" name="body" rows="5" required></textarea>
+            <button type="submit">Send Email</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch('/cgi-bin/send_mail.py', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '';
+                if (data.status === "error") {
+                    resultDiv.innerHTML = `<div class="failed">${data.message}</div>`;
+                } else {
+                    data.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = item.status;
+                        div.innerHTML = `Email to ${item.email}: ${item.status}`;
+                        if (item.status === 'failed') {
+                            div.innerHTML += `<br>Error: ${item.error}`;
+                        }
+                        resultDiv.appendChild(div);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

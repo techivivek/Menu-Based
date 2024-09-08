@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Executor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f8;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-2xl font-semibold mb-4">Command Executor</h1>
+    <label for="RaOne" class="block text-gray-700 font-medium mb-2">Enter your command:</label>
+    <input type="text" name="v" id="RaOne" class="input-field" placeholder="Type your command here"/>
+    <button onclick="vivekcmd()" class="btn">Check Me</button>
+    <div id="RaOne1" class="output">Wait For Result...</div>
+</div>
+
+<script>
+    function vivekcmd() {
+        let y = document.getElementById("RaOne");
+        let cmd = y.value;
+        let url = "http://43.204.225.136/cgi-bin/cmd.py?v=" + cmd;
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                let x = document.getElementById("RaOne1");
+                x.innerHTML = xhr.responseText;
+            }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
+</script>
+
+</body>
+</html>

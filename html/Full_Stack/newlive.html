@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live HTML Interpreter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+
+        /* Header styles */
+        .header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        /* Home button styles */
+        .home-btn {
+            background-color: #0056b3;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            padding: 10px 20px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .home-btn:hover {
+            background-color: #004494;
+        }
+
+        /* Container styles */
+        .container {
+            display: flex;
+            height: calc(100vh - 70px); /* Adjust for header height */
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* Editor and Output styles */
+        .editor-container,
+        .output-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .editor-header,
+        .output-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 2px solid #0056b3;
+        }
+
+        .editor {
+            flex: 1;
+            padding: 15px;
+            border-right: 1px solid #ccc;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            outline: none;
+            white-space: pre-wrap;
+        }
+
+        .output {
+            flex: 1;
+            padding: 15px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background-color: #fff;
+        }
+
+        /* Buttons for toolbar */
+        .toolbar {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .toolbar button {
+            padding: 8px 15px;
+            margin: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toolbar button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="home-btn" onclick="goToHome()">Home</button>
+        <h1>Live HTML Interpreter</h1>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        <!-- Editor Section -->
+        <div class="editor-container">
+            <div class="editor-header">HTML Editor</div>
+            <div class="toolbar">
+                <button onclick="clearEditor()">Clear</button>
+                <button onclick="loadTemplate()">Load Template</button>
+                <button onclick="updateOutput()">Run</button>
+            </div>
+            <div class="editor" contenteditable="true" id="htmlInput">
+                <!-- Initial HTML content -->
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Live HTML Interpreter</title>
+                </head>
+                <body>
+                    <h1>Hello, World!</h1>
+                </body>
+                </html>
+            </div>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-container">
+            <div class="output-header">Live Output</div>
+            <div class="output" id="htmlOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to update output with user input HTML
+        function updateOutput() {
+            var htmlInput = document.getElementById('htmlInput').innerText;
+            var htmlOutput = document.getElementById('htmlOutput');
+            htmlOutput.innerHTML = htmlInput;
+        }
+
+        // Function to clear the editor
+        function clearEditor() {
+            document.getElementById('htmlInput').innerText = '';
+            updateOutput();
+        }
+
+        // Function to load a basic HTML template
+        function loadTemplate() {
+            const template = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live HTML Interpreter</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>`;
+            document.getElementById('htmlInput').innerText = template;
+            updateOutput();
+        }
+
+        // Function to navigate to Home page
+        function goToHome() {
+            window.location.href = "index.html"; // Change index.html to your home page
+        }
+
+        // Update output on input change
+        document.getElementById('htmlInput').addEventListener('input', updateOutput);
+
+        // Initialize the output
+        updateOutput();
+    </script>
+</body>
+
+</html>

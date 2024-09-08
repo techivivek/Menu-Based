@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Current Location</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #map {
+            height: 70%;
+            width: 100%;
+            max-width: 800px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        #controls {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #357ae8;
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="controls">
+        <button onclick="findCurrentLocation()">Find My Location</button>
+        <div id="status" class="status">Click the button to find your current location.</div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYsrb0Z7GN-5oeQ1StgwXu4i9IeFMoPZw&callback=initMap" async defer></script>
+    <script>
+        let map;
+        let infoWindow;
+
+        function initMap() {
+            // Initialize the map
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: { lat: -34.397, lng: 150.644 }
+            });
+            infoWindow = new google.maps.InfoWindow();
+        }
+
+        function findCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+
+                        map.setCenter(pos);
+                        new google.maps.Marker({
+                            position: pos,
+                            map: map,
+                            title: 'You are here'
+                        });
+
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent('You are here.');
+                        infoWindow.open(map);
+
+                        document.getElementById('status').textContent = `Location found: Latitude ${pos.lat}, Longitude ${pos.lng}`;
+                    },
+                    () => {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    }
+                );
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation
+                ? 'Error: The Geolocation service failed.'
+                : 'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+    </script>
+</body>
+</html>

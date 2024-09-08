@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Capture</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            height: 100vh;
+            justify-content: center;
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            margin-top: 20px;
+            font-size: 2.2em;
+            color: #4CAF50;
+        }
+        video, canvas {
+            border: 3px solid #4CAF50;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        #error-message {
+            color: red;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Camera Capture</h1>
+    <div class="container">
+        <video id="video" width="320" height="240" autoplay></video>
+        <canvas id="canvas" width="320" height="240"></canvas>
+        <div class="controls">
+            <button id="capture">Capture Photo</button>
+            <button id="download">Download Photo</button>
+            <button id="home">Home</button>
+        </div>
+        <div id="error-message"></div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const captureButton = document.getElementById('capture');
+        const downloadButton = document.getElementById('download');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const homeButton = document.getElementById('home');
+        const errorMessage = document.getElementById('error-message');
+
+        // Function to start the camera
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        video.srcObject = stream;
+                        errorMessage.textContent = ''; // Clear error message
+                    })
+                    .catch(error => {
+                        console.error('Error accessing camera:', error);
+                        errorMessage.textContent = 'Unable to access camera. Please check your browser settings or use a different browser.';
+                    });
+            } else {
+                errorMessage.textContent = 'Your browser does not support camera access. Please use a modern browser.';
+                console.log('navigator.mediaDevices.getUserMedia is not supported.');
+            }
+        }
+
+        // Check if mediaDevices and getUserMedia are supported
+        function checkBrowserSupport() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                errorMessage.textContent = 'Your browser does not support camera access. Please use a modern browser.';
+                console.log('navigator.mediaDevices or navigator.mediaDevices.getUserMedia is not available.');
+            }
+        }
+
+        // Start the camera when the page loads
+        window.onload = () => {
+            checkBrowserSupport();
+            startCamera();
+        };
+
+        // Capture photo when button is clicked
+        captureButton.addEventListener('click', () => {
+            if (video.srcObject) {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            } else {
+                errorMessage.textContent = 'No video stream available. Please check camera access.';
+            }
+        });
+
+        // Download photo when button is clicked
+        downloadButton.addEventListener('click', () => {
+            const imageDataURL = canvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = imageDataURL;
+            a.download = 'captured_photo.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+        // Redirect to home page when button is clicked
+        homeButton.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
